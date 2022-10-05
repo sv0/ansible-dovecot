@@ -1,0 +1,37 @@
+---
+dovecot_version: "2.3.14"
+dovecot_user: dovecot
+dovecot_group: dovecot
+dovecot_service: dovecot
+dovecot_conf_dir: "/etc/dovecot"
+dovecot_conf_file: "{{ dovecot_conf_dir }}/dovecot.conf"
+dovecot_conf_file_list:
+  - 10-auth.conf
+  - 10-logging.conf
+  - 10-mail.conf
+  - 10-master.conf
+  - 10-ssl.conf
+  - 15-lda.conf
+  - 20-lmtp.conf
+  - 90-sieve.conf
+  - auth-passwdfile.conf.ext
+
+dovecot_mail_dir: "/home/vmail"
+
+# debian
+dovecot_package_name: dovecot-core
+
+dovecot_certificate: "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+dovecot_listen_on: "0.0.0.0" # or network interface
+# https://www.mail-archive.com/misc@opensmtpd.org/msg05096.html
+# this differs on Debian and OpenBSD
+dovecot_lmtp: /usr/lib/dovecot/lmtp
+dovecot_lmtp_host: 127.0.0.1
+dovecot_lmtp_port: 994
+
+# dovecot_credentials_file: "{{ smtpd_conf_dir }}/credentials"
+smtpd_credentials_file: "{{ smtpd_conf_dir | default('/etc/mail') }}/credentials"
+smtpd_mailname: "{{ inventory_hostname }}"
+
+certificate_hostname: "{{ inventory_hostname }}"
+certificate_self_signed: false
