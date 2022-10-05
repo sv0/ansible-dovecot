@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Slavik Svyrydiuk
+  role_name: dovecot
+  description: Install and configures Dovecot POP3/IMAP server
+  license: MIT
+  min_ansible_version: '2.10'
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+  galaxy_tags:
+    - imap
+    - pop3
+    - mail
+dependencies: []
