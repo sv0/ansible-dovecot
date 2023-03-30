@@ -1,0 +1,110 @@
+---
+- name: Install Dovecot
+  ansible.builtin.package:
+    name: "{{ dovecot_package_name }}" # ={{ dovecot_version }}"
+    state: present
+  register: __register_dovecot_package
+
+- name: Stop dovecot after initial installation of the package  # noqa 503
+  # XXX debian-family always starts daemon when a package has been installed,
+  # which sometimes causes side-effects during ansible play. teach them to
+  # behave like other distribiutions.
+  # as practices like this have never been implemented in other roles, it
+  # might cause unexpected side-effects.
+  ansible.builtin.service:
+    name: "{{ dovecot_service }}"
+    state: stopped
+  when:
+    - __register_dovecot_package.changed
+
+- name: Install other required packages
+  ansible.builtin.package:
+    state: present
+    name:
+      - "{{ dovecot_package_name }}"
+      - dovecot-lmtpd
+      - dovecot-sieve
+      - dovecot-imapd
+
+- name: Enable dovecot
+  ansible.builtin.service:
+    name: "{{ dovecot_service }}"
+    enabled: true
+
+- name: Create dovecot conf directories
+  ansible.builtin.file:
+    path: "{{ dovecot_conf_dir }}/conf.d"
+    state: directory
+    mode: 0755
+  tags: conf
+
+- name: Create dovecot.conf
+  ansible.builtin.template:
+    src: "dovecot.conf.j2"
+    dest: "{{ dovecot_conf_file }}"
+    mode: 0640
+  notify:
+    - Restart dovecot
+    - Validate dovecot.conf
+  tags: conf
+
+- name: "Create conf.d/* files"
+  ansible.builtin.template:
+    src: "conf.d/{{ item }}.j2"
+    dest: "{{ dovecot_conf_dir }}/conf.d/{{ item }}"
+    mode: 0640
+  loop: "{{ dovecot_conf_file_list }}"
+  notify:
+    - Restart dovecot
+    - Validate dovecot.conf
+
+- name: Create user vmail
+  ansible.builtin.user:
+    name: vmail
+    # system: true
+    shell: /sbin/nologin
+    home: "{{ dovecot_mail_dir }}"
+    # useradd -m -d /var/vmail -s /sbin/nologin vmail
+
+- name: Create dovecot mail directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    # owner: "{{ dovecot_user }}"
+    owner: vmail
+    group: "{{ dovecot_group }}"
+  loop:
+    - "{{ dovecot_mail_dir }}"
+    - "{{ dovecot_mail_dir }}/sieve"
+
+- name: Create sieve sub-directory in vmail directory
+  ansible.builtin.file:
+    path: "{{ dovecot_mail_dir }}/sieve"
+    state: directory
+    mode: 0775
+    owner: vmail
+    group: "{{ dovecot_group }}"
+
+- name: "Create script {{ dovecot_mail_dir + '/sieve/spam.sieve' }}"
+  ansible.builtin.copy:
+    src: files/spam.sieve
+    dest: "{{ dovecot_mail_dir }}/sieve/spam.sieve"
+    mode: 0755
+
+- name: Fix dovecot login.conf on OpenBSD
+  ansible.builtin.lineinfile:
+    path: /etc/login.conf
+    line: |
+      dovecot:\
+          :openfiles-cur=1024:\
+          :openfiles-max=2048:\
+          :tc=daemon:
+    regexp: "^dovecot"
+    state: present
+  when: ansible_distribution == "OpenBSD"
+
+- name: Start dovecot
+  ansible.builtin.service:
+    name: "{{ dovecot_service }}"
+    state: started
