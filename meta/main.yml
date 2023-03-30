@@ -2,6 +2,7 @@
 galaxy_info:
   author: Slavik Svyrydiuk
   role_name: dovecot
+  namespace: sv0
   description: Install and configures Dovecot POP3/IMAP server
   license: MIT
   min_ansible_version: '2.10'
@@ -13,4 +14,5 @@ galaxy_info:
     - imap
     - pop3
     - mail
+
 dependencies: []

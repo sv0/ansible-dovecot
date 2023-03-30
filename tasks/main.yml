@@ -1,0 +1,22 @@
+---
+- name: Debug ansible_os_family and ansible_distribution
+  debug:
+    msg: "Ansible runs on {{ ansible_os_family }}, {{ ansible_distribution }}."
+
+- name: Initialize distribution-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- include: certificate.yml
+  tags:
+    - certificate
+    - cert
+  when:
+    - not certificate_self_signed
+  # apply:
+  #   tags:
+  #     - cert
+
+- include: install.yml
