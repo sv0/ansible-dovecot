@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include sv0.dovecot"
+      include_role:
+        name: "sv0.dovecot"
