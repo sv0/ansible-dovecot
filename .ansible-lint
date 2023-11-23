@@ -1,0 +1,13 @@
+---
+warn_list:
+  - deprecated-module
+  - jinja[spacing]
+  - name[missing]
+  - yaml[empty-lines]
+  - yaml[octal-values]
+  - yaml[truthy]
+  - name[casing]
+  - risky-file-permissions
+  - no-changed-when
+  - fqcn[action-core]
+  - warning[outdated-tag]
