@@ -1,22 +1,26 @@
 ---
 - name: Debug ansible_os_family and ansible_distribution
-  debug:
+  ansible.builtin.debug:
     msg: "Ansible runs on {{ ansible_os_family }}, {{ ansible_distribution }}."
 
 - name: Initialize distribution-specific variables
-  include_vars: "{{ item }}"
+  ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
 
-- include: certificate.yml
+- name: Include certificate tasks
+  ansible.builtin.include_tasks:
+    file: certificate.yml
+    apply:
+      tags:
+        - cert
   tags:
     - certificate
     - cert
   when:
     - not certificate_self_signed
-  # apply:
-  #   tags:
-  #     - cert
 
-- include: install.yml
+- name: Include install tasks
+  ansible.builtin.include_tasks:
+    file: install.yml
