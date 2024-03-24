@@ -22,7 +22,7 @@ dovecot_mail_dir: "/home/vmail"
 dovecot_package_name: dovecot-core
 
 dovecot_certificate: "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-dovecot_listen_on: "0.0.0.0" # or network interface
+dovecot_listen_on: "0.0.0.0"  # or network interface
 # https://www.mail-archive.com/misc@opensmtpd.org/msg05096.html
 # this differs on Debian and OpenBSD
 dovecot_lmtp: /usr/lib/dovecot/lmtp
