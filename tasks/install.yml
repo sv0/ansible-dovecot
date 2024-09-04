@@ -1,11 +1,11 @@
 ---
 - name: Install Dovecot
   ansible.builtin.package:
-    name: "{{ dovecot_package_name }}" # ={{ dovecot_version }}"
+    name: "{{ dovecot_package_name }}"
     state: present
   register: __register_dovecot_package
 
-- name: Stop dovecot after initial installation of the package  # noqa 503
+- name: Stop dovecot after initial installation of the package
   # XXX debian-family always starts daemon when a package has been installed,
   # which sometimes causes side-effects during ansible play. teach them to
   # behave like other distribiutions.
@@ -92,7 +92,7 @@
     dest: "{{ dovecot_mail_dir }}/sieve/spam.sieve"
     mode: 0755
 
-- name: Fix dovecot login.conf on OpenBSD
+- name: Fix login.conf on OpenBSD
   ansible.builtin.lineinfile:
     path: /etc/login.conf
     line: |
