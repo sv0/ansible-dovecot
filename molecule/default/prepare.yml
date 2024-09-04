@@ -1,10 +1,23 @@
 ---
 - name: Prepare
   hosts: all
-  gather_facts: false
 
-  # tasks:
-  #   - name: Install python for Ansible
-  #     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-  #     become: true
-  #     changed_when: false
+  tasks:
+    - name: Debug
+      ansible.builtin.debug:
+        # var: ansible_distribution_release
+        var: ansible_distribution
+
+    - name: apt-get update
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 86400
+
+    - name: Install net-tools (required by testinfa)
+      ansible.builtin.apt:
+        name: net-tools
+
+    - name: Create certificate directory
+      raw: "mkdir -p {{ dovecot_certificate_dir }}"
+      changed_when: false
+      delegate_to: localhost
