@@ -3,11 +3,30 @@
   ansible.builtin.debug:
     msg: "Ansible runs on {{ ansible_os_family }}, {{ ansible_distribution }}."
 
+- name: Import assert tasks
+  ansible.builtin.import_tasks:
+    file: asserts.yml
+  tags:
+    - assert
+    - asserts
+
 - name: Initialize distribution-specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+
+- name: Generate a self-signed OpenSSL certificate
+  shell: |
+    openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
+    openssl req -new -x509 \
+      -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
+      -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
+      -subj "/C=US/ST=Example/L=Example/O=Dis/CN=www.example.com"
+  when:
+    - certificate_self_signed is defined
+    - (certificate_self_signed)
+  notify: Restart dovecot
 
 - name: Include certificate tasks
   ansible.builtin.include_tasks:
@@ -15,9 +34,8 @@
     apply:
       tags:
         - cert
-  tags:
-    - certificate
-    - cert
+        - certificate
+  tags: always
   when:
     - not certificate_self_signed
 
