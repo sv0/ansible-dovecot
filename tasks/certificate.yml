@@ -1,0 +1,31 @@
+---
+- name: Setting certificate fullchain
+  set_fact:
+    certificate_fullchain: "{{ dovecot_certificate_dir }}/fullchain.pem"
+
+- name: "Debug certificate_fullchain"
+  debug:
+    var: certificate_fullchain
+
+- name: Setting certificate key path
+  set_fact:
+    certificate_privkey: "{{ dovecot_certificate_dir }}/privkey.pem"
+
+- name: "Debug certificate_self_signed"
+  debug:
+    var: certificate_self_signed
+
+- name: "Copy certificate to {{ inventory_hostname }}"
+  copy:
+    src: "{{ certificate_fullchain }}"
+    dest: "/etc/ssl/{{ certificate_hostname }}.crt"
+  notify: Restart dovecot
+
+- name: "Copy private key to {{ inventory_hostname }}"
+  copy:
+    src: "{{ certificate_privkey }}"
+    dest: "/etc/ssl/private/{{ certificate_hostname }}.key"
+    owner: root
+    # group: "ssl-cert"
+    mode: 0640
+  notify: Restart dovecot
