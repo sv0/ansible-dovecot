@@ -16,18 +16,18 @@
     - "{{ ansible_distribution | lower }}.yml"
     - "{{ ansible_os_family | lower }}.yml"
 
-- name: Generate a self-signed OpenSSL certificate
-  ansible.builtin.shell: |
-    openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
-    openssl req -new -x509 \
-      -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
-      -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
-      -subj "/C=US/ST=Example/L=Example/O=Dis/CN=www.example.com"
-  when:
-    - certificate_self_signed is defined
-    - (certificate_self_signed)
-  notify: Restart dovecot
-  no_changed_when: true
+# - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+#   community.crypto.openssl_privatekey:
+#     path: "/etc/ssl/private/{{ inventory_hostname }}.key"
+#   when:
+#     - certificate_self_signed is defined
+#     - (certificate_self_signed)
+#   notify: Restart dovecot
+#
+# - name: Generate an OpenSSL public key in PEM format
+#   community.crypto.openssl_publickey:
+#     path: "/etc/ssl/{{ inventory_hostname }}.crt"
+#     privatekey_path: "/etc/ssl/private/{{ inventory_hostname }}.key"
 
 - name: Include certificate tasks
   ansible.builtin.include_tasks:
