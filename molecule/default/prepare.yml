@@ -1,6 +1,8 @@
 ---
 - name: Prepare
   hosts: all
+  vars:
+    dovecot_certificate_dir: certs
 
   tasks:
     - name: Debug
@@ -8,7 +10,7 @@
         # var: ansible_distribution_release
         var: ansible_distribution
 
-    - name: apt-get update
+    - name: Run apt-get update
       ansible.builtin.apt:
         update_cache: true
         cache_valid_time: 86400

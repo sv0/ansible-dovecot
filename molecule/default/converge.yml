@@ -1,7 +1,14 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    certificate_self_signed: true
+    dovecot_certificate_dir: certs
+    dovecot_user_list:
+      - username: test@example.com
+        password: supersecrettypico
+
   tasks:
     - name: "Include sv0.dovecot"
-      include_role:
+      ansible.builtin.include_role:
         name: "sv0.dovecot"
