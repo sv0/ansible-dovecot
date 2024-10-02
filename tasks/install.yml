@@ -19,12 +19,12 @@
 
 - name: Install other required packages
   ansible.builtin.package:
-    state: present
     name:
       - "{{ dovecot_package_name }}"
       - dovecot-lmtpd
       - dovecot-sieve
       - dovecot-imapd
+    state: present
 
 - name: Enable dovecot
   ansible.builtin.service:

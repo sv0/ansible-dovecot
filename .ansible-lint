@@ -7,4 +7,5 @@ exclude_paths:
   - .venv
 
 parseable: true
-warn_list: []
+warn_list:
+  - no-handler

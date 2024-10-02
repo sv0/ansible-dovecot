@@ -1,8 +1,9 @@
 ---
 - name: Restart dovecot
-  service:
+  ansible.builtin.service:
     name: "{{ dovecot_service }}"
     state: restarted
 
 - name: Validate dovecot.conf
   ansible.builtin.command: "dovecot -n"
+  no_changed_when: true
