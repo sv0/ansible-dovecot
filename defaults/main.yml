@@ -30,7 +30,8 @@ dovecot_lmtp_host: 127.0.0.1
 dovecot_lmtp_port: 994
 
 # dovecot_credentials_file: "{{ smtpd_conf_dir }}/credentials"
-smtpd_credentials_file: "{{ smtpd_conf_dir | default('/etc/mail') }}/credentials"
+smtpd_credentials_file:
+  "{{ smtpd_conf_dir | default('/etc/mail') }}/credentials"
 smtpd_mailname: "{{ inventory_hostname }}"
 
 certificate_hostname: "{{ inventory_hostname }}"
