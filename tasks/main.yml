@@ -16,7 +16,8 @@
     - "{{ ansible_distribution | lower }}.yml"
     - "{{ ansible_os_family | lower }}.yml"
 
-# - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+# TODO `use community.crypto` module
+# - name: Generate an OpenSSL private key with the default values
 #   community.crypto.openssl_privatekey:
 #     path: "/etc/ssl/private/{{ inventory_hostname }}.key"
 #   when:
