@@ -1,2 +1,7 @@
 ---
-dovecot_package_name: dovecot-core
+dovecot_package_name: dovecot-core  # TODO delete
+dovecot_packages:
+  - dovecot-core
+  - dovecot-lmtpd
+  - dovecot-sieve
+  - dovecot-imapd
