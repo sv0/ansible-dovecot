@@ -5,11 +5,14 @@ galaxy_info:
   namespace: sv0
   description: Install and configures Dovecot POP3/IMAP server
   license: MIT
-  min_ansible_version: '2.10'
+  min_ansible_version: '2.14'
   platforms:
     - name: Debian
       versions:
-        - buster
+        - bookworm
+    - name: openBSD
+      versions:
+        - '7.6'
   galaxy_tags:
     - imap
     - pop3

@@ -9,8 +9,8 @@ The Secure IMAP server.
 Requirements
 ------------
 
-- Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
+- OpenBSD 7.6
 
 Default Variables
 -----------------
