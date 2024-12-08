@@ -5,3 +5,7 @@ collections:
   - name: community.general
     version: "8.1.0"
     source: https://galaxy.ansible.com
+
+  - name: community.crypto
+    version: ">=2.22.0,<2.99"
+    source: https://galaxy.ansible.com
