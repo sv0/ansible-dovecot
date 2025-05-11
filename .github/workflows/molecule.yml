@@ -1,0 +1,37 @@
+---
+name: Molecule
+
+'on':
+  pull_request:
+  push:
+    branches:
+      - master
+      - devel
+  schedule:
+    - cron: '30 1 * * 3'
+
+jobs:
+  molecule:
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - debian-11-systemd
+          - debian-12-systemd
+
+    steps:
+    - name: Test Ansible roles with Molecule
+      uses: robertdebock/molecule-action@6.0.1
+    - name: Check out the codebase
+      uses: actions/checkout@v4
+      with:
+        path: "${{ github.repository }}"
+        image: "${{ matrix.image }}"
+        options: parallel
+        namespace: slavik0
+      env:
+        ANSIBLE_FORCE_COLOR: '1'
+        ANSIBLE_VERBOSITY: '2'
+        MOLECULE_DEBUG: '1'
+        # MOLECULE_DISTRO: "${{ matrix.distro }}"
+        PY_COLORS: '1'
