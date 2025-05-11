@@ -1,29 +1,7 @@
 ---
-- name: Install Dovecot
+- name: Install dovecot packages
   ansible.builtin.package:
-    name: "{{ dovecot_package_name }}"
-    state: present
-  register: __register_dovecot_package
-
-- name: Stop dovecot after initial installation of the package
-  # XXX debian-family always starts daemon when a package has been installed,
-  # which sometimes causes side-effects during ansible play. teach them to
-  # behave like other distribiutions.
-  # as practices like this have never been implemented in other roles, it
-  # might cause unexpected side-effects.
-  ansible.builtin.service:
-    name: "{{ dovecot_service }}"
-    state: stopped
-  when:
-    - __register_dovecot_package.changed
-
-- name: Install other required packages
-  ansible.builtin.package:
-    name:
-      - "{{ dovecot_package_name }}"
-      - dovecot-lmtpd
-      - dovecot-sieve
-      - dovecot-imapd
+    name: "{{ dovecot_packages }}"
     state: present
 
 - name: Enable dovecot
