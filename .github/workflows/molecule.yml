@@ -27,7 +27,6 @@ jobs:
     - name: Test Ansible roles with Molecule
       uses: robertdebock/molecule-action@6.0.1
       with:
-        path: "${{ github.repository }}"
         image: "${{ matrix.image }}"
         options: parallel
         namespace: slavik0
