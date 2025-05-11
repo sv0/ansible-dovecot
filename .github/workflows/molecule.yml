@@ -12,6 +12,8 @@ name: Molecule
 
 jobs:
   molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
