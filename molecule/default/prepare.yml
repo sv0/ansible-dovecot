@@ -7,7 +7,6 @@
   tasks:
     - name: Debug
       ansible.builtin.debug:
-        # var: ansible_distribution_release
         var: ansible_distribution
 
     - name: Run apt-get update
@@ -19,7 +18,9 @@
       ansible.builtin.apt:
         name: net-tools
 
-    - name: Create certificate directory
-      raw: "mkdir -p {{ dovecot_certificate_dir }}"
-      changed_when: false
-      delegate_to: localhost
+    - name: Generate a Self Signed OpenSSL certificate
+      shell: |
+        openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
+        openssl req -new -x509 -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
+          -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
+          -subj "/C=US/ST=Example/L=Example/O=Dis/CN={{ inventory_hostname }}"
