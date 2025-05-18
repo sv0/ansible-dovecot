@@ -22,17 +22,16 @@ jobs:
           - debian-12-systemd
 
     steps:
-    - name: Check out the codebase
-      uses: actions/checkout@v4
-    - name: Test Ansible roles with Molecule
-      uses: robertdebock/molecule-action@6.0.1
-      with:
-        image: "${{ matrix.image }}"
-        options: parallel
-        namespace: slavik0
-      env:
-        ANSIBLE_FORCE_COLOR: '1'
-        ANSIBLE_VERBOSITY: '2'
-        MOLECULE_DEBUG: '1'
-        # MOLECULE_DISTRO: "${{ matrix.distro }}"
-        PY_COLORS: '1'
+      - name: Check out the codebase
+        uses: actions/checkout@v4
+      - name: Test Ansible roles with Molecule
+        uses: robertdebock/molecule-action@6.0.1
+        with:
+          image: "${{ matrix.image }}"
+          options: parallel
+          namespace: slavik0
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+          ANSIBLE_VERBOSITY: '2'
+          MOLECULE_DEBUG: '1'
+          PY_COLORS: '1'
