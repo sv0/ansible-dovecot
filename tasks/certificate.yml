@@ -21,7 +21,7 @@
     dest: "/etc/ssl/{{ certificate_hostname }}.crt"
     owner: root
     # group: "ssl-cert"
-    mode: 0644
+    mode: "0644"
   notify: Restart dovecot
 
 - name: "Copy private key to {{ inventory_hostname }}"
@@ -29,5 +29,5 @@
     src: "{{ certificate_privkey }}"
     dest: "/etc/ssl/private/{{ certificate_hostname }}.key"
     owner: root
-    mode: 0640
+    mode: "0640"
   notify: Restart dovecot
