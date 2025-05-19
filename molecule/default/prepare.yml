@@ -21,13 +21,13 @@
           - net-tools
           - python3-cryptography
 
-#     - name: Generate a Self Signed OpenSSL certificate
-#       shell: |
-#         openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
-#         openssl req -new -x509 \
-#           -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
-#           -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
-#           -subj "/C=US/ST=Example/L=Example/O=Dis/CN={{ inventory_hostname }}"
+#   - name: Generate a Self Signed OpenSSL certificate
+#     shell: |
+#       openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
+#       openssl req -new -x509 \
+#         -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
+#         -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
+#         -subj "/C=US/ST=Example/L=Example/O=Dis/CN={{ inventory_hostname }}"
 
     - name: Generate an OpenSSL private key with the default values
       community.crypto.openssl_privatekey:

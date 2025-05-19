@@ -10,7 +10,7 @@
 
   tasks:
     - name: Create certificate directory
-      raw: "mkdir -p {{ dovecot_certificate_dir }}"
+      ansible.builtin.raw: "mkdir -p {{ dovecot_certificate_dir }}"
       changed_when: false
       delegate_to: localhost
     - name: "Include sv0.dovecot"

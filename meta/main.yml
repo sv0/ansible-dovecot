@@ -12,10 +12,8 @@ galaxy_info:
         - bookworm
     - name: openBSD
       versions:
-        - '7.6'
+        - 'all'
   galaxy_tags:
     - imap
     - pop3
     - mail
-
-dependencies: []
