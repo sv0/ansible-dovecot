@@ -1,0 +1,15 @@
+# Authentication for passwd-file users. Included from 10-auth.conf
+
+# passwd-like file with specified location.
+# <doc/wiki/AuthDatabase.PasswdFile.txt>
+
+passdb {
+  # args = /etc/mail/passwd
+  args = {{ smtpd_credentials_file }}
+  driver = passwd-file
+}
+
+userdb {
+  args = uid={{ dovecot_user }} gid={{ dovecot_group }} home={{ dovecot_mail_dir }}/%d/%n
+  driver = static
+}

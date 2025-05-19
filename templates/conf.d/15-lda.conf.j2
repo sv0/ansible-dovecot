@@ -1,0 +1,27 @@
+##
+## LDA specific settings (also used by LMTP)
+##
+
+# Address to use when sending rejection mails.
+# Default is postmaster@%d. %d expands to recipient domain.
+postmaster_address = postmaster@{{ smtpd_mailname }}
+
+# Hostname to use in various parts of sent mails (e.g. in Message-Id) and
+# in LMTP replies. Default is the system's real hostname@domain.
+hostname = {{ smtpd_mailname }}
+
+# Header where the original recipient address (SMTP's RCPT TO: address) is taken
+# from if not available elsewhere. With dovecot-lda -a parameter overrides this. 
+# A commonly used header for this is X-Original-To.
+#lda_original_recipient_header =
+
+# Should saving a mail to a nonexistent mailbox automatically create it?
+lda_mailbox_autocreate = yes
+
+# Should automatically created mailboxes be also automatically subscribed?
+#lda_mailbox_autosubscribe = no
+
+protocol lda {
+  # Space separated list of plugins to load (default is global mail_plugins).
+  #mail_plugins = $mail_plugins
+}

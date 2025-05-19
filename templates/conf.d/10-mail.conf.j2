@@ -1,0 +1,22 @@
+##
+## Mailbox locations and namespaces
+##
+first_valid_uid = 100
+
+mail_location = maildir:{{ dovecot_mail_dir }}/%d/%n/Maildir
+
+# https://doc.dovecot.org/configuration_manual/mail_location/#format
+# :LAYOUT=fs
+
+# There are a few special variables you can use, eg.:
+
+#   %u - username
+#   %n - user part in user@domain, same as %u if there's no domain
+#   %d - domain part in user@domain, empty if there's no domain
+#   %h - home directory
+
+# See doc/wiki/Variables.txt for full list. Some examples:
+
+namespace inbox {
+  inbox = yes
+}
