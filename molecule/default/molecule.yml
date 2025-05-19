@@ -4,7 +4,7 @@ driver:
 
 platforms:
   - name: molecule-instance
-    image: ${image:-"slavik0/debian-11-systemd"}
+    image: ${namespace}/${image:-"debian-11-systemd"}
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
