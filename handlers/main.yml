@@ -6,3 +6,5 @@
 
 - name: Validate dovecot.conf
   ansible.builtin.command: "dovecot -n"
+  register: output
+  changed_when: output.rc != 0
