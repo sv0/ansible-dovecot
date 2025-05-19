@@ -16,20 +16,6 @@
     - "{{ ansible_distribution | lower }}.yml"
     - "{{ ansible_os_family | lower }}.yml"
 
-# TODO `use community.crypto` module
-# - name: Generate an OpenSSL private key with the default values
-#   community.crypto.openssl_privatekey:
-#     path: "/etc/ssl/private/{{ inventory_hostname }}.key"
-#   when:
-#     - certificate_self_signed is defined
-#     - (certificate_self_signed)
-#   notify: Restart dovecot
-#
-# - name: Generate an OpenSSL public key in PEM format
-#   community.crypto.openssl_publickey:
-#     path: "/etc/ssl/{{ inventory_hostname }}.crt"
-#     privatekey_path: "/etc/ssl/private/{{ inventory_hostname }}.key"
-
 - name: Include certificate tasks
   ansible.builtin.include_tasks:
     file: certificate.yml

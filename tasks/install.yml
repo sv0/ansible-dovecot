@@ -49,20 +49,19 @@
     path: "{{ item }}"
     state: directory
     mode: "0770"
-    # owner: "{{ dovecot_user }}"
     owner: vmail
     group: "{{ dovecot_group }}"
   loop:
     - "{{ dovecot_mail_dir }}"
     - "{{ dovecot_mail_dir }}/sieve"
 
-- name: Create sieve sub-directory in vmail directory
-  ansible.builtin.file:
-    path: "{{ dovecot_mail_dir }}/sieve"
-    state: directory
-    mode: "0775"
-    owner: vmail
-    group: "{{ dovecot_group }}"
+# - name: Create sieve sub-directory in vmail directory
+#   ansible.builtin.file:
+#     path: "{{ dovecot_mail_dir }}/sieve"
+#     state: directory
+#     mode: "0775"
+#     owner: vmail
+#     group: "{{ dovecot_group }}"
 
 - name: "Create script {{ dovecot_mail_dir + '/sieve/spam.sieve' }}"
   ansible.builtin.copy:

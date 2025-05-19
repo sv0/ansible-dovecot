@@ -9,6 +9,10 @@
         password: supersecrettypico
 
   tasks:
+    - name: Create certificate directory
+      raw: "mkdir -p {{ dovecot_certificate_dir }}"
+      changed_when: false
+      delegate_to: localhost
     - name: "Include sv0.dovecot"
       ansible.builtin.include_role:
         name: "sv0.dovecot"

@@ -4,9 +4,8 @@ extends: default
 ignore: |
   tests/
   .tox
-  bak
+  *.bak
   .venv
-
 
 rules:
   comments:

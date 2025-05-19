@@ -3,6 +3,7 @@
   hosts: all
   vars:
     dovecot_certificate_dir: certs
+    certificate_self_signed: true
 
   tasks:
     - name: Debug
@@ -14,14 +15,28 @@
         update_cache: true
         cache_valid_time: 86400
 
-    - name: Install net-tools (required by testinfa)
+    - name: Install required packages
       ansible.builtin.apt:
-        name: net-tools
+        name:
+          - net-tools
+          - python3-cryptography
 
-    - name: Generate a Self Signed OpenSSL certificate
-      shell: |
-        openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
-        openssl req -new -x509 \
-          -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
-          -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
-          -subj "/C=US/ST=Example/L=Example/O=Dis/CN={{ inventory_hostname }}"
+#     - name: Generate a Self Signed OpenSSL certificate
+#       shell: |
+#         openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
+#         openssl req -new -x509 \
+#           -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
+#           -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
+#           -subj "/C=US/ST=Example/L=Example/O=Dis/CN={{ inventory_hostname }}"
+
+    - name: Generate an OpenSSL private key with the default values
+      community.crypto.openssl_privatekey:
+        path: "/etc/ssl/private/{{ inventory_hostname }}.key"
+      when:
+        - certificate_self_signed is defined
+        - (certificate_self_signed)
+
+    - name: Generate an OpenSSL public key in PEM format
+      community.crypto.openssl_publickey:
+        path: "/etc/ssl/{{ inventory_hostname }}.crt"
+        privatekey_path: "/etc/ssl/private/{{ inventory_hostname }}.key"
