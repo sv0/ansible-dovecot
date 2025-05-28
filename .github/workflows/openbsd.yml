@@ -1,0 +1,34 @@
+---
+name: OpenBSD
+
+on:  # yamllint disable-line rule:truthy
+  - push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: A job to run test in OpenBSD
+    env:
+      MYTOKEN: ${{ secrets.MYTOKEN }}
+      MYTOKEN2: "value2"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test in OpenBSD
+        id: test
+        uses: vmactions/openbsd-vm@v1.1.8
+        with:
+          envs: 'MYTOKEN MYTOKEN2'
+          usesh: true
+          prepare: |
+            pkg_add curl
+
+          run: |
+
+            pwd
+            ls -lah
+            whoami
+            env
+            sysctl hw.model
+            sysctl hw.ncpu
+            sysctl hw.physmem
+            sysctl hw.usermem
