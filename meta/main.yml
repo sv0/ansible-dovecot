@@ -10,7 +10,7 @@ galaxy_info:
     - name: Debian
       versions:
         - bookworm
-    - name: openBSD
+    - name: OpenBSD
       versions:
         - 'all'
   galaxy_tags:
