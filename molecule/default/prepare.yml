@@ -10,9 +10,9 @@
       ansible.builtin.debug:
         var: ansible_distribution
 
-   - name: Allow releaseinfo change
-     shell: |
-       apt-get update --allow-releaseinfo-change
+    - name: Allow releaseinfo change
+      shell: |
+        apt-get update --allow-releaseinfo-change
 
     - name: Run apt-get update
       ansible.builtin.apt:
