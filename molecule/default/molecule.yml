@@ -3,7 +3,7 @@ driver:
   name: docker
 
 platforms:
-  - name: molecule-instance
+  - name: "molecule-instance-${image:-debian-11-systemd}"
     image: "${namespace:-slavik0}/${image:-debian-11-systemd}"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
