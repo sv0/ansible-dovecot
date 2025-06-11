@@ -1,5 +1,5 @@
 ---
-name: Galaxy Action
+name: Publish to Galaxy
 
 on: # yamllint disable-line rule:truthy
   push:
