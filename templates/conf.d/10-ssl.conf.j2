@@ -1,0 +1,27 @@
+##
+## SSL settings
+##
+
+# SSL/TLS support: yes, no, required. <doc/wiki/SSL.txt>
+ssl = yes
+ssl_cert = </etc/ssl/{{ certificate_hostname }}.crt
+ssl_key = </etc/ssl/private/{{ certificate_hostname }}.key
+
+# SSL DH parameters
+# Generate new params with `openssl dhparam -out /etc/dovecot/dh.pem 4096`
+# Or migrate from old ssl-parameters.dat file with the command dovecot
+# gives on startup when ssl_dh is unset.
+#ssl_dh = </etc/dovecot/dh.pem
+
+ssl_min_protocol = TLSv1.2
+
+#
+# SSL ciphers to use, the default is:
+#
+# ssl_cipher_list = "ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA"
+
+# Prefer the server's order of ciphers over client's.
+ssl_prefer_server_ciphers = yes
+
+# SSL crypto device to use, for valid values run "openssl engine"
+#ssl_crypto_device =
