@@ -35,6 +35,6 @@ jobs:
           namespace: slavik0
         env:
           ANSIBLE_FORCE_COLOR: '1'
-          ANSIBLE_VERBOSITY: '2'
-          MOLECULE_DEBUG: '1'
+          # ANSIBLE_VERBOSITY: '2'
+          # MOLECULE_DEBUG: '1'
           PY_COLORS: '1'
