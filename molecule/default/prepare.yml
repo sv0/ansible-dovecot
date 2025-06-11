@@ -10,6 +10,10 @@
       ansible.builtin.debug:
         var: ansible_distribution
 
+   - name: Allow releaseinfo change
+     shell: |
+       apt-get update --allow-releaseinfo-change
+
     - name: Run apt-get update
       ansible.builtin.apt:
         update_cache: true
@@ -20,14 +24,6 @@
         name:
           - net-tools
           - python3-cryptography
-
-#   - name: Generate a Self Signed OpenSSL certificate
-#     shell: |
-#       openssl genrsa -out "/etc/ssl/private/{{ inventory_hostname }}.key" 4096
-#       openssl req -new -x509 \
-#         -key "/etc/ssl/private/{{ inventory_hostname }}.key" \
-#         -out "/etc/ssl/{{ inventory_hostname }}.crt" -days 365 \
-#         -subj "/C=US/ST=Example/L=Example/O=Dis/CN={{ inventory_hostname }}"
 
     - name: Generate an OpenSSL private key with the default values
       community.crypto.openssl_privatekey:
