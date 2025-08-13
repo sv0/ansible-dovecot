@@ -3,14 +3,23 @@ Ansible Dovecot
 
 [![CI](https://github.com/sv0/ansible-dovecot/actions/workflows/ci.yml/badge.svg)](https://github.com/sv0/ansible-dovecot/actions/workflows/ci.yml)
 
-Install and configure [Dovecot](https://www.dovecot.org/).
+This ansible role installs and configures [Dovecot](https://www.dovecot.org/).
 The Secure IMAP server.
+
+It has been tested for the following systems:
+
+* Linux
+  * Debian Bookworm
+  * Debian Trixie
+* OpenBSD 7.6
+* NetBSD 10.1
 
 Requirements
 ------------
 
-- Debian 12 (Bookworm)
-- OpenBSD 7.6
+* Python >=3.9 on Ansible controller host.
+* [ansible-core](https://pypi.org/project/ansible-core/) version >= 2.14, <2.20
+
 
 Default Variables
 -----------------
@@ -20,7 +29,7 @@ I use ACME client [dehydrated](https://dehydrated.io),
 so all otained certificates are in `/var/lib/dehydrated/certs`
 
 ```yaml
-dovecot_certificate_dir: "/var/lib/dehydrated/certs"
+certificate_dir: "/var/lib/dehydrated/certs"
 ```
 
 see `defaults/main.yml` for more details.
@@ -45,7 +54,7 @@ Playbook
       roles:
         - sv0.dovecot
       vars:
-        dovecot_certificate_dir: "/var/lib/dehydrated/certs"
+        certificate_dir: "/var/lib/dehydrated/certs"
 ```
 
 Tests
