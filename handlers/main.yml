@@ -5,6 +5,6 @@
     state: restarted
 
 - name: Validate dovecot.conf
-  ansible.builtin.command: "dovecot -n"
+  ansible.builtin.command: "{{ dovecot_executable }} -n"
   register: output
   changed_when: output.rc != 0

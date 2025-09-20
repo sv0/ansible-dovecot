@@ -1,7 +1,7 @@
 ---
 - name: Setting certificate fullchain
   ansible.builtin.set_fact:
-    certificate_fullchain: "{{ dovecot_certificate_dir }}/fullchain.pem"
+    certificate_fullchain: "{{ certificate_dir }}/fullchain.pem"
 
 - name: "Debug certificate_fullchain"
   ansible.builtin.debug:
@@ -9,7 +9,7 @@
 
 - name: Setting certificate key path
   ansible.builtin.set_fact:
-    certificate_privkey: "{{ dovecot_certificate_dir }}/privkey.pem"
+    certificate_privkey: "{{ certificate_dir }}/privkey.pem"
 
 - name: "Debug certificate_self_signed"
   ansible.builtin.debug:
@@ -18,7 +18,7 @@
 - name: "Copy certificate to {{ inventory_hostname }}"
   ansible.builtin.copy:
     src: "{{ certificate_fullchain }}"
-    dest: "/etc/ssl/{{ certificate_hostname }}.crt"
+    dest: "{{ dovecot_certificate_dir }}/{{ certificate_hostname }}.crt"
     owner: root
     # group: "ssl-cert"
     mode: "0644"
@@ -27,7 +27,7 @@
 - name: "Copy private key to {{ inventory_hostname }}"
   ansible.builtin.copy:
     src: "{{ certificate_privkey }}"
-    dest: "/etc/ssl/private/{{ certificate_hostname }}.key"
+    dest: "{{ dovecot_certificate_dir }}/private/{{ certificate_hostname }}.key"
     owner: root
     mode: "0640"
   notify: Restart dovecot

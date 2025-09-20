@@ -16,12 +16,15 @@ dovecot_conf_file_list:
   - 90-sieve.conf
   - auth-passwdfile.conf.ext
 
+dovecot_executable: /usr/sbin/dovecot
 dovecot_mail_dir: "/home/vmail"
 
 # debian
 dovecot_package_name: dovecot-core
 
-dovecot_certificate: "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+dovecot_certificate_dir: "/etc/ssl"
+dovecot_certificate: "{{ dovecot_certificate_dir }}/certs/ssl-cert-snakeoil.pem"
+
 dovecot_listen_on: "0.0.0.0"  # or network interface
 # https://www.mail-archive.com/misc@opensmtpd.org/msg05096.html
 # this differs on Debian and OpenBSD
