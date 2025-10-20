@@ -81,6 +81,14 @@
     state: present
   when: ansible_distribution == "OpenBSD"
 
+- name: "Copy rc script on NetBSD"
+  ansible.builtin.copy:
+    src: /usr/pkg/share/examples/rc.d/dovecot
+    dest: /etc/rc.d/dovecot
+    remote_src: true
+    mode: "0755"
+  when: ansible_distribution == "NetBSD"
+
 - name: Start dovecot
   ansible.builtin.service:
     name: "{{ dovecot_service }}"
