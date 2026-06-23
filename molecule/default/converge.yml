@@ -3,14 +3,14 @@
   hosts: all
   vars:
     certificate_self_signed: true
-    dovecot_certificate_dir: certs
+    certificate_dir: certs
     dovecot_user_list:
       - username: test@example.com
         password: supersecrettypico
 
   tasks:
     - name: Create certificate directory
-      ansible.builtin.raw: "mkdir -p {{ dovecot_certificate_dir }}"
+      ansible.builtin.raw: "mkdir -p {{ certificate_dir }}"
       changed_when: false
       delegate_to: localhost
     - name: "Include sv0.dovecot"

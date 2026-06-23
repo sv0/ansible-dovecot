@@ -4,8 +4,8 @@
 
 # SSL/TLS support: yes, no, required. <doc/wiki/SSL.txt>
 ssl = yes
-ssl_cert = </etc/ssl/{{ certificate_hostname }}.crt
-ssl_key = </etc/ssl/private/{{ certificate_hostname }}.key
+ssl_cert = <{{ dovecot_certificate_dir }}/{{ certificate_hostname }}.crt
+ssl_key = <{{ dovecot_certificate_dir }}/private/{{ certificate_hostname }}.key
 
 # SSL DH parameters
 # Generate new params with `openssl dhparam -out /etc/dovecot/dh.pem 4096`

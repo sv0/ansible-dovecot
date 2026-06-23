@@ -1,0 +1,14 @@
+---
+# TODO add to netbsd tasks
+# pkgin install dovecot
+# The following files should be created for dovecot-2.3.21.1:
+# /etc/rc.d/dovecot (m=0755)
+# [/usr/pkg/share/examples/rc.d/dovecot]
+
+dovecot_executable: /usr/pkg/sbin/dovecot
+dovecot_conf_dir: "/usr/pkg/etc/dovecot"
+dovecot_conf_file: "{{ dovecot_conf_dir }}/dovecot.conf"
+dovecot_certificate_dir: /etc/openssl
+dovecot_packages:
+  - "dovecot"
+  - "dovecot-pigeonhole"

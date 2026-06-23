@@ -1,24 +1,24 @@
 ---
-- name: Check dovecot_certificate_dir variable
+- name: Check certificate_dir variable
   ansible.builtin.assert:
     fail_msg: >
-      Variable `dovecot_certificate_dir` must be defined.
+      Variable `certificate_dir` must be defined.
     that:
-      - dovecot_certificate_dir is defined
+      - certificate_dir is defined
 
-- name: Stat dovecot_certificate_dir
-  ansible.builtin.stat:
-    path: "{{ dovecot_certificate_dir }}"
-  register: dovecot_certificate_dir_result
-  delegate_to: localhost
+- name: Stat certificate_dir
+  local_action:
+    module: ansible.builtin.stat
+    path: "{{ certificate_dir }}"
+  register: certificate_dir_result
 
-- name: "Debug dovecot_certificate_dir_result"
+- name: "Debug certificate_dir_result"
   ansible.builtin.debug:
-    var: dovecot_certificate_dir_result
+    var: certificate_dir_result
 
-- name: Check that dovecot_certificate_dir exists
+- name: Check that certificate_dir exists
   ansible.builtin.assert:
     fail_msg: >
-      Directory {{ dovecot_certificate_dir }} does not exist.
+      Directory {{ certificate_dir }} does not exist.
     that:
-      - dovecot_certificate_dir_result.stat.exists
+      - certificate_dir_result.stat.exists

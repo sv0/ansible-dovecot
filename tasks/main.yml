@@ -15,6 +15,7 @@
   with_first_found:
     - "{{ ansible_distribution | lower }}.yml"
     - "{{ ansible_os_family | lower }}.yml"
+  tags: always
 
 - name: Include certificate tasks
   ansible.builtin.include_tasks:
