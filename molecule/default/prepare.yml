@@ -2,7 +2,7 @@
 - name: Prepare
   hosts: all
   vars:
-    dovecot_certificate_dir: certs
+    certificate_dir: certs
     certificate_self_signed: true
 
   tasks:
